@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Employee Attrition Predictor</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='brain.png') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Employee Attrition Predictor</h1>
+
+    <p>Enter employee details below to predict employee attrition risk.</p>
+
+    <form method="POST">
+
+        <label>Age</label>
+        <input type="number" name="Age" placeholder="Enter Age" required>
+
+        <label>Monthly Income</label>
+        <input type="number" name="MonthlyIncome" placeholder="Enter Monthly Income" required>
+
+        <label>Distance From Home</label>
+        <input type="number" name="DistanceFromHome" placeholder="Enter Distance" required>
+
+        <label>Gender</label>
+        <select name="Gender" required>
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+
+        <label>OverTime</label>
+        <select name="OverTime" required>
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Business Travel</label>
+        <select name="BusinessTravel" required>
+            <option value="">Select</option>
+            <option>Travel_Rarely</option>
+            <option>Travel_Frequently</option>
+            <option>Non-Travel</option>
+        </select>
+
+        <label>Department</label>
+        <select name="Department" required>
+            <option value="">Select</option>
+            <option>Sales</option>
+            <option>Research & Development</option>
+            <option>Human Resources</option>
+        </select>
+
+        <label>Education</label>
+        <select name="Education" required>
+            <option value="">Select</option>
+            <option value="1">Below College</option>
+            <option value="2">College</option>
+            <option value="3">Bachelor</option>
+            <option value="4">Master</option>
+            <option value="5">Doctor</option>
+        </select>
+
+        <label>Environment Satisfaction</label>
+        <select name="EnvironmentSatisfaction" required>
+            <option value="">Select</option>
+            <option value="1">Low</option>
+            <option value="2">Medium</option>
+            <option value="3">High</option>
+            <option value="4">Very High</option>
+        </select>
+
+        <label>Job Role</label>
+        <select name="JobRole" required>
+            <option value="">Select</option>
+            <option>Sales Executive</option>
+            <option>Research Scientist</option>
+            <option>Laboratory Technician</option>
+            <option>Manufacturing Director</option>
+            <option>Healthcare Representative</option>
+            <option>Manager</option>
+            <option>Sales Representative</option>
+            <option>Research Director</option>
+            <option>Human Resources</option>
+        </select>
+
+        <label>Job Satisfaction</label>
+        <select name="JobSatisfaction" required>
+            <option value="">Select</option>
+            <option value="1">Low</option>
+            <option value="2">Medium</option>
+            <option value="3">High</option>
+            <option value="4">Very High</option>
+        </select>
+
+        <label>Marital Status</label>
+        <select name="MaritalStatus" required>
+            <option value="">Select</option>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+        </select>
+
+        <button type="submit">
+            Predict Attrition
+        </button>
+
+    </form>
+
+    {% if prediction %}
+
+    <hr>
+
+    <!-- Prediction Result -->
+
+    <div class="result">
+
+        <h2 class="prediction-title">
+            {{ prediction }}
+        </h2>
+
+        <h3>
+            Prediction Confidence : {{ probability }}%
+        </h3>
+
+        <progress value="{{ probability }}" max="100"></progress>
+
+    </div>
+
+    <!-- HR Insights Card -->
+
+    <div class="result-card">
+
+        <h2 class="result-title">
+            Employee Risk Assessment
+        </h2>
+
+        <div class="risk-section">
+
+            <span class="risk-label">
+                Risk Level
+            </span>
+
+            <span class="{% if risk == 'High' %}risk-high{% else %}risk-low{% endif %}">
+                {{ risk }}
+            </span>
+
+        </div>
+
+        <div class="info-section">
+
+            <h3>Key Findings</h3>
+
+            {% if insights %}
+
+                {% for item in insights %}
+
+                    <div class="info-card">
+                        {{ item }}
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="info-card">
+                    No significant risk indicators detected.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <div class="info-section">
+
+            <h3>Recommended HR Actions</h3>
+
+            {% for item in recommendations %}
+
+                <div class="info-card">
+                    {{ item }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
